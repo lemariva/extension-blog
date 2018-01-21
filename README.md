@@ -40,7 +40,7 @@ CREATE TABLE pk_blog_category (
   title varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   slug varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   color varchar(7) COLLATE utf8_unicode_ci NOT NULL,
-  icon varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  icon varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY pk_BLOG_POST_CATEGORY_SLUG (slug)
 ) ENGINE=InnoDB;
