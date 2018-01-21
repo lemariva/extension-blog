@@ -9,7 +9,7 @@ It allows you to change post url from /blog/post-url to /category-name/post-url.
 1. Download extension
 
 a) when you don't have blog extension:
-- git clone https://github.com/martinwojtus/extension-blog.git
+- git clone https://github.com/lemariva/extension-blog.git
 - copy extension to your packages directory
 - activate extension from pagekit admin panel
 
@@ -17,7 +17,7 @@ a) when you don't have blog extension:
 b) when you already have blog extension:
 
 - remove your packages/pagekit/blog directory with all subdirs
-- git clone https://github.com/martinwojtus/extension-blog.git
+- git clone https://github.com/lemariva/extension-blog.git
 - copy new extension to the blog directory
 - run scripts from DDL.sql file:
 
@@ -39,12 +39,14 @@ CREATE TABLE pk_blog_category (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   title varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   slug varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  color varchar(7) COLLATE utf8_unicode_ci NOT NULL,
+  icon varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY pk_BLOG_POST_CATEGORY_SLUG (slug)
 ) ENGINE=InnoDB;
 ```
 
-2. Add method to your UrlProvider:
+2. Add method to your UrlProvider (`app\modules\application\src\Application\UrlProvider.php`):
 ```php
  public function getFirstURLPath()
  {
@@ -52,6 +54,16 @@ CREATE TABLE pk_blog_category (
     return explode('/', $request->getPathInfo())[1];
  }
 ```
+
+3. Use node.js & webpack to create the JavaScript files under `blog\app\bundle`
+- install node.js from https://nodejs.org/en/
+- install webpack: `npm install webpack -g`
+- install vue:`npm install vue -g`
+- install vue-cli: `npm install vue-cli -g`
+- git clone https://github.com/lemariva/extension-blog.git
+- go to the directory extension-blog
+- type: `npm install` & wait
+- type: `webpack` -> this creates the directory app\bundle
 
 In your administration panel you will see new Categories tab, with list of stored categories. 
 

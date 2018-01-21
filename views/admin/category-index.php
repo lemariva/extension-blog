@@ -45,8 +45,10 @@
             <tr>
                 <th class="pk-table-width-minimum"><input type="checkbox" v-check-all:selected.literal="input[name=id]"
                                                           number></th>
-                <th class="pk-table-min-width-300">{{ 'Category' | trans }}</th>
-                <th class="pk-table-min-width-300">{{ 'Slug' | trans }}</th>
+                <th class="pk-table-min-width-100">{{ 'Category' | trans }}</th>
+                <th class="pk-table-min-width-100">{{ 'Slug' | trans }}</th>
+                <th class="pk-table-min-width-50">{{ 'Color' | trans }}</th>
+                <th class="pk-table-min-width-50">{{ 'Icon' | trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -57,6 +59,12 @@
                 </td>
                 <td>
                     {{ category.slug }}
+                </td>
+                <td>
+                  <i class="uk-icon-flickr" style="color:{{ category.color }}"></i>
+                </td>
+                <td>
+                  <i class="{{ category.icon }}"></i>
                 </td>
             </tr>
             </tbody>
@@ -69,4 +77,3 @@
     <v-pagination :page.sync="config.page" :pages="pages" v-show="pages > 1 || page > 0"></v-pagination>
 
 </div>
-

@@ -11,6 +11,9 @@
         <h2 class="uk-article-title">
             <a href="<?= $view->url('@blog/id', ['id' => $post->id]) ?>"><?= $post->title ?></a>
         </h2>
+        <?php foreach ($post->getTags() as $tag) : ?>
+          &nbsp; <i class="uk-icon-tag"></i> <?php echo $tag; ?>
+        <?php endforeach; ?>
 
         <p class="uk-article-meta">
             <?= __('Written by %name% on %date%', ['%name%' => $this->escape($post->user->name), '%date%' => '<time datetime="' . $post->date->format(\DateTime::ATOM) . '" v-cloak>{{ "' . $post->date->format(\DateTime::ATOM) . '" | date "longDate" }}</time>']) ?>

@@ -80,6 +80,15 @@
                     </div>
 
                     <div class="uk-form-row">
+                        <label class="uk-form-label">{{ 'Categories per page' | trans }}</label>
+                        <div class="uk-form-controls uk-form-controls-text">
+                            <p class="uk-form-controls-condensed">
+                                <input type="number" v-model="config.categories.categories_per_page" class="uk-form-width-small">
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="uk-form-row">
                         <span class="uk-form-label">{{ 'Default post settings' | trans }}</span>
                         <div class="uk-form-controls uk-form-controls-text">
                             <p class="uk-form-controls-condensed">

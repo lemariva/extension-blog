@@ -6,7 +6,6 @@ use Pagekit\Application as App;
 use Pagekit\System\Model\DataModelTrait;
 use Pagekit\User\Model\AccessModelTrait;
 use Pagekit\User\Model\User;
-
 /**
  * @Entity(tableClass="@blog_post")
  */
@@ -63,7 +62,7 @@ class Post implements \JsonSerializable
     public $comment_count = 0;
 
     /**
-     * @BelongsTo(targetEntity="Pagekit\Blog\Model\Category", keyFrom="category_id")
+     * @BelongsTo(targetEntity="Category", keyFrom="category_id")
      */
     public $category;
 

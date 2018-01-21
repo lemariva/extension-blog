@@ -7,9 +7,13 @@
     <?php endif ?>
 
     <h1 class="uk-article-title"><?= $post->title ?></h1>
+    <?php foreach ($post->getTags() as $tag) : ?>
+      &nbsp; <i class="uk-icon-tag"></i> <?php echo $tag; ?>
+    <?php endforeach; ?>
 
     <p class="uk-article-meta">
         <?= __('Written by %name% on %date%', ['%name%' => $this->escape($post->user->name), '%date%' => '<time datetime="'.$post->date->format(\DateTime::ATOM).'" v-cloak>{{ "'.$post->date->format(\DateTime::ATOM).'" | date "longDate" }}</time>' ]) ?>
+        <i class="uk-icon-list"></i><span><?= __('%category%', ['%category%' => $post->category->title]) ?></span>
     </p>
 
     <div class="uk-margin"><?= $post->content ?></div>

@@ -4,6 +4,7 @@ namespace Pagekit\Blog\Controller;
 
 use Pagekit\Application as App;
 use Pagekit\Blog\Model\Post;
+use Pagekit\Blog\Model\Category;    // BelongsTo not working in Model/Post
 use Pagekit\Module\Module;
 
 class SiteController
@@ -41,9 +42,15 @@ class SiteController
 
         $query->offset(($page - 1) * $limit)->limit($limit)->orderBy('date', 'DESC');
 
+        // BelongsTo not working in Model/Post
+        $categories = Category::query()->get();
+
         foreach ($posts = $query->get() as $post) {
             $post->excerpt = App::content()->applyPlugins($post->excerpt, ['post' => $post, 'markdown' => $post->get('markdown')]);
             $post->content = App::content()->applyPlugins($post->content, ['post' => $post, 'markdown' => $post->get('markdown'), 'readmore' => true]);
+            // BelongsTo not working in Model/Post
+            if ($post->category_id != null)
+              $post->category = $categories[$post->category_id];
         }
 
         return [
@@ -121,6 +128,10 @@ class SiteController
 
         $post->excerpt = App::content()->applyPlugins($post->excerpt, ['post' => $post, 'markdown' => $post->get('markdown')]);
         $post->content = App::content()->applyPlugins($post->content, ['post' => $post, 'markdown' => $post->get('markdown')]);
+
+        // BelongsTo not working in Model/Post
+        $categories = Category::query()->get();
+        $post->category = $categories[$post->category_id];
 
         $user = App::user();
 

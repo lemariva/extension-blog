@@ -5,8 +5,9 @@ namespace Pagekit\Blog\Controller;
 use Pagekit\Application as App;
 use Pagekit\Blog\Model\Comment;
 use Pagekit\Blog\Model\Post;
-use Pagekit\User\Model\Role;
 use Pagekit\Blog\Model\Category;
+use Pagekit\User\Model\Role;
+
 
 /**
  * @Access(admin=true)
@@ -14,30 +15,7 @@ use Pagekit\Blog\Model\Category;
 class BlogController
 {
     /**
-     * @Access("blog: manage own posts || blog: manage all posts")
-     * @Request({"filter": "array", "page":"int"})
-     */
-    public function postAction($filter = null, $page = null)
-    {
-        return [
-            '$view' => [
-                'title' => __('Posts'),
-                'name' => 'blog/admin/post-index.php'
-            ],
-            '$data' => [
-                'statuses' => Post::getStatuses(),
-                'authors' => Post::getAuthors(),
-                'canEditAll' => App::user()->hasAccess('blog: manage all posts'),
-                'config' => [
-                    'filter' => (object)$filter,
-                    'page' => $page
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * @Access("blog: manage own posts || blog: manage all posts")
+     * @Access("blog: manage own categories || blog: manage all categories")
      * @Request({"filter": "array", "page":"int"})
      */
     public function categoryAction($filter = null, $page = null)
@@ -94,6 +72,29 @@ class BlogController
 
             return App::redirect('@blog/category');
         }
+    }
+
+    /**
+     * @Access("blog: manage own posts || blog: manage all posts")
+     * @Request({"filter": "array", "page":"int"})
+     */
+    public function postAction($filter = null, $page = null)
+    {
+        return [
+            '$view' => [
+                'title' => __('Posts'),
+                'name' => 'blog/admin/post-index.php'
+            ],
+            '$data' => [
+                'statuses' => Post::getStatuses(),
+                'authors' => Post::getAuthors(),
+                'canEditAll' => App::user()->hasAccess('blog: manage all posts'),
+                'config' => [
+                    'filter' => (object)$filter,
+                    'page' => $page
+                ]
+            ]
+        ];
     }
 
     /**
