@@ -57,7 +57,7 @@ CREATE TABLE pk_blog_category (
 
 3. Use node.js & webpack to create the JavaScript files under `blog\app\bundle`
 - install node.js from https://nodejs.org/en/
-- install webpack: `npm install webpack -g`
+- install webpack: `npm install webpack@2.1.0-beta.22 -g`		#last version does not work!
 - install vue:`npm install vue -g`
 - install vue-cli: `npm install vue-cli -g`
 - git clone https://github.com/lemariva/extension-blog.git
@@ -72,6 +72,15 @@ Edit category form:
 
 Edit post form:
 ![Post Form](https://github.com/martinwojtus/extension-blog/blob/master/post-edit-form.png)
+
+
+4. Added visitor post counter using Google Analytic API for information.
+It requires:
+* `composer require google/apiclient:^2.0`
+* Google Account. More info [here](https://developers.google.com/analytics/devguides/reporting/core/v4/)
+
+You need to activate the option in the blog settings. Additionally you need to configure `Start Date`, `Client ID`, and 
+`Client Secret` parameters. Check for pop up blocking. A pop up is opened if the Google Token does not exist.
 
 
 Use at your own risk :)
