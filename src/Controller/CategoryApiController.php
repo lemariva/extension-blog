@@ -18,29 +18,29 @@ class CategoryApiController
     {
         $query  = Category::query();
         $filter = array_merge(array_fill_keys(['status', 'search', 'author', 'order', 'limit'], ''), $filter);
-        
+
         extract($filter, EXTR_SKIP);
-        
+
         if ($search) {
             $query->where(function ($query) use ($search) {
                 $query->orWhere(['title LIKE :search', 'slug LIKE :search'], ['search' => "%{$search}%"]);
             });
         }
-        
+
         if (!preg_match('/^(title|slug)\s(asc|desc)$/i', $order, $order)) {
             $order = [1 => 'title', 2 => 'desc'];
         }
-        
+
         $limit = (int) $limit ?: App::module('category')->config('categories.categories_per_page');
         $count = $query->count();
         $pages = ceil($count / $limit);
         $page  = max(0, min($pages - 1, $page));
-        
+
         $categories = array_values($query->offset($page * $limit)->limit($limit)->orderBy($order[1], $order[2])->get());
-        
+
         return compact('categories', 'pages', 'count');
     }
-    
+
     /**
      * @Route("/{id}", methods="GET", requirements={"id"="\d+"})
      */
@@ -48,7 +48,7 @@ class CategoryApiController
     {
         return Category::where(compact('id'))->first();
     }
-    
+
     /**
      * @Route("/", methods="POST")
      * @Route("/{id}", methods="POST", requirements={"id"="\d+"})
@@ -57,28 +57,28 @@ class CategoryApiController
     public function saveAction($data, $id = 0)
     {
         if (!$id || !$category = Category::find($id)) {
-            
+
             if ($id) {
                 App::abort(404, __('Category not found.'));
             }
-            
+
             $category = Category::create();
         }
-        
+
         if (!$data['slug'] = App::filter($data['slug'] ?: $data['title'], 'slugify')) {
             App::abort(400, __('Invalid slug.'));
         }
-        
+
         // user without universal access can only edit their own posts
         if(!App::user()->hasAccess('blog: manage all categories')) {
             App::abort(400, __('Access denied.'));
         }
-        
+
         $category->save($data);
-        
+
         return ['message' => 'success', 'category' => $category];
     }
-    
+
     /**
      * @Route("/{id}", methods="DELETE", requirements={"id"="\d+"})
      * @Request({"id": "int"}, csrf=true)
@@ -86,14 +86,14 @@ class CategoryApiController
     public function deleteAction($id)
     {
         if ($category = Category::find($id)) {
-            
+
             if(!App::user()->hasAccess('blog: manage all categories')) {
                 App::abort(400, __('Access denied.'));
             }
-            
+
             $category->delete();
         }
-        
+
         return ['message' => 'success'];
     }
 

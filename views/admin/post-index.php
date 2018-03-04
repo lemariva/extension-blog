@@ -16,6 +16,7 @@
                         <li><a class="pk-icon-block pk-icon-hover" title="Unpublish" data-uk-tooltip="{delay: 500}" @click="status(3)"></a></li>
                         <li><a class="pk-icon-copy pk-icon-hover" title="Copy" data-uk-tooltip="{delay: 500}" @click="copy"></a></li>
                         <li><a class="pk-icon-delete pk-icon-hover" title="Delete" data-uk-tooltip="{delay: 500}" @click="remove" v-confirm="'Delete Posts?'"></a></li>
+                        <!--<li><a class="uk-icon-eye uk-icon-hover" title="Update Visitors" data-uk-tooltip="{delay: 500}" @click="updateVisitors"></a></li>-->
                     </ul>
                 </div>
             </template>
@@ -28,9 +29,8 @@
 
         </div>
         <div data-uk-margin>
-
+            <a class="uk-button uk-button-primary" @click="updateVisitors" v-confirm="'Update post visitors using gapi?'">{{ 'Update Visitors' | trans }}</a>
             <a class="uk-button uk-button-primary" :href="$url.route('admin/blog/post/edit')">{{ 'Add Post' | trans }}</a>
-
         </div>
     </div>
 
@@ -41,6 +41,7 @@
                     <th class="pk-table-width-minimum"><input type="checkbox" v-check-all:selected.literal="input[name=id]" number></th>
                     <th class="pk-table-min-width-200" v-order:title="config.filter.order">{{ 'Title' | trans }}</th>
                     <th class="pk-table-width-100">{{'Category' | trans}}</th>
+                    <th class="pk-table-width-100" v-order:visitor_count="config.filter.order">{{ 'Visitors' | trans }}</th>
                     <th class="pk-table-width-100 uk-text-center">
                         <input-filter :title="$trans('Status')" :value.sync="config.filter.status" :options="statusOptions"></input-filter>
                     </th>
@@ -60,6 +61,7 @@
                         <a :href="$url.route('admin/blog/post/edit', { id: post.id })">{{ post.title }}</a>
                     </td>
                     <td>{{post.postcategory.title }}</td>
+                    <td class="uk-text-center">{{post.visitor_count }}</td>
                     <td class="uk-text-center">
                         <a :title="getStatusText(post)" :class="{
                                 'pk-icon-circle': post.status == 0,

@@ -7,7 +7,7 @@ use Pagekit\Blog\Model\Comment;
 use Pagekit\Blog\Model\Post;
 use Pagekit\Blog\Model\Category;
 use Pagekit\User\Model\Role;
-
+use Pagekit\Blog\Helper\AnalyticsHelper;
 
 /**
  * @Access(admin=true)
@@ -73,6 +73,51 @@ class BlogController
             return App::redirect('@blog/category');
         }
     }
+
+    /**
+     * @Route("/gapi/update", name="/gapi/update", methods="POST")
+     * @Access("blog: manage own posts || blog: manage all posts")
+     */
+    public function updateVisitsAction()
+    {
+        $query  = Post::query();
+        $config = App::module('blog')->config();
+
+        $gAnalytics = new AnalyticsHelper();
+
+        // user without universal access can not edit this
+        if(!App::user()->hasAccess('blog: manage all posts')) {
+            App::abort(403, __('Insufficient User Rights.'));
+        }
+
+        if(!$config['gapi']['gapi_enabled']){
+            App::abort(400, __('Access denied. Enable and configure Gapi in settings!'));
+        }
+
+        $count = $query->count();
+        $posts = array_values($query->orderBy('date', 'desc')->get());
+
+        foreach ($posts as $post)
+        {
+          $webpage = $post->slug;
+          $starDate = $config['gapi']['start_date'];
+          $analytic_report = $gAnalytics->apiAction($webpage, $starDate);
+
+          // echo $webpage;
+          // print_r($analytic_report);
+          // echo "<br/>";
+
+          if($analytic_report['message'] != 'ok')
+          {
+              return App::response()->json($analytic_report, 400);
+          }
+          $post->visitor_count = $analytic_report['visits'];
+          $post->save();
+
+        }
+        return true;
+    }
+
 
     /**
      * @Access("blog: manage own posts || blog: manage all posts")

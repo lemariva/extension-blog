@@ -99,6 +99,31 @@
                             </p>
                         </div>
                     </div>
+                    <div class="uk-form-row">
+
+                        <span class="uk-form-label"><a href="https://console.cloud.google.com/apis/credentials?pli=1">{{ 'Google Analytics Credentials' | trans }}</a></span>
+                        <div class="uk-form-controls uk-form-controls-text">
+                          <p class="uk-form-controls-condensed">
+                              <label><input type="checkbox" v-model="config.gapi.gapi_enabled"> {{ 'Enable Google Apis' | trans }}</label>
+                          </p>
+                          <p class="uk-form-controls-condensed">
+                             <label>{{ 'Start Date' | trans }}</label>
+                            <input class="uk-form-small" type="text" v-model="config.gapi.start_date">
+                          </p>
+                          <p class="uk-form-controls-condensed">
+                             <label>{{ 'Client ID' | trans }}</label>
+                            <input class="uk-form-small" type="text" v-model="config.gapi.credentials.client_id">
+                          </p>
+                          <p class="uk-form-controls-condensed">
+                            <label>{{ 'Client Secret' | trans }}</label>
+                            <input type="text" class="uk-form-small" v-model="config.gapi.credentials.client_secret">
+                          <p/>
+                          <p class="uk-form-controls-condensed">
+                            <label>{{ 'Profile Id' | trans }}</label>
+                            <input class="uk-form-small" type="text" v-model="config.gapi.credentials.profile_id">
+                          <p/>
+                        </div>
+                    </div>
 
                 </li>
                 <li>

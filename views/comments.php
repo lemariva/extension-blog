@@ -26,7 +26,8 @@
 
 <script id="comments-item" type="text/template">
 
-    <li :id="'comment-'+comment.id">
+
+    <li :id="'comment-'+comment.id"><a :name="'comment-'+comment.id"></a>
 
         <article class="uk-comment" :class="{'uk-comment-primary': comment.special}">
 
@@ -50,7 +51,7 @@
                 <p>{{{ comment.content }}}</p>
 
             </div>
-            <p v-if="showReplyButton"><a href="#" @click.prevent="replyTo">{{ 'Reply' | trans }}</a></p>
+            <p v-if="showReplyButton"><a :href="'#comment-'+comment.id" @click.prevent="replyTo">{{ 'Reply' | trans }}</a></p>
 
             <div class="uk-alert" v-for="message in comment.messages">{{ message }}</div>
 

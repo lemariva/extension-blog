@@ -57,6 +57,7 @@ return [
                 'Pagekit\\Blog\\Controller\\PostApiController',
                 'Pagekit\\Blog\\Controller\\CommentApiController',
                 'Pagekit\\Blog\\Controller\\CategoryApiController',
+                'Pagekit\\Blog\\Controller\\AnalyticsApiController'
             ]
         ]
     ],
@@ -168,6 +169,17 @@ return [
             'posts_per_page' => 20,
             'comments_enabled' => true,
             'markdown_enabled' => true
+        ],
+
+        'gapi_auth_token' => '',
+        'gapi' => [
+            'gapi_enabled' => true,
+            'start_date'=> '',
+            'credentials' => [
+                'client_id' => '',
+                'client_secret' => '',
+                'profile_id' => ''
+            ],
         ],
 
         'permalink' => [

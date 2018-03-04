@@ -19,7 +19,7 @@ module.exports = {
 
     ready: function () {
         this.resource = this.$resource('api/blog/post{/id}');
-        this.$watch('config.page', this.load, {immediate: true});    
+        this.$watch('config.page', this.load, {immediate: true});
     },
 
     watch: {
@@ -73,18 +73,19 @@ module.exports = {
             });
         },
 
+
         status: function(status) {
 
-            var posts = this.getSelected();
+          var posts = this.getSelected();
 
-            posts.forEach(function(post) {
-                post.status = status;
-            });
+          posts.forEach(function(post) {
+              post.status = status;
+          });
 
-            this.resource.save({ id: 'bulk' }, { posts: posts }).then(function () {
-                this.load();
-                this.$notify('Posts saved.');
-            });
+          this.resource.save({ id: 'bulk' }, { posts: posts }).then(function () {
+              this.load();
+              this.$notify('Posts saved.');
+          });
         },
 
         remove: function() {
@@ -93,6 +94,29 @@ module.exports = {
                 this.load();
                 this.$notify('Posts deleted.');
             });
+        },
+
+        updateVisitors: function() {
+            this.progress = !0, this.$notify('Visitor update is in progress. Please stand by until the "Visitors updated"-message shows up.', {
+                status: "warning",
+                timeout: 0
+            }), this.$http.post("admin/blog/gapi/update").then(
+                function(t) { //success
+                  this.$notify("Visitors updated.", {
+                    status: "success",
+                  }), this.progress = !1;
+                  location.reload();
+              },
+                function(t) { //failed
+                  var derror = JSON.parse(t.data.message);
+                  if(derror.error.code==401){
+                    this.$notify(t.data, "danger"), this.progress = !1;
+                    var redirect =  t.data.redirect;
+                    window.open(redirect,'',' scrollbars=yes,menubar=no,width=500, resizable=yes,toolbar=no,location=no,status=no')
+                  }else{
+                    this.$notify(t.data, "danger"), this.progress = !1
+                  }
+            })
         },
 
         toggleStatus: function (post) {
