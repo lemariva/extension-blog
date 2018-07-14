@@ -101,17 +101,27 @@ class BlogController
         {
           $webpage = $post->slug;
           $starDate = $config['gapi']['start_date'];
-          $analytic_report = $gAnalytics->apiAction($webpage, $starDate);
 
-          // echo $webpage;
-          // print_r($analytic_report);
-          // echo "<br/>";
+          $starDateWeek = date("Y-m-d", strtotime("- 7 days")); 
 
-          if($analytic_report['message'] != 'ok')
+
+
+          $analytic_report_visitors = $gAnalytics->apiAction($webpage, $starDate);
+          $analytic_week_visitors = $gAnalytics->apiAction($webpage, $starDateWeek);
+
+          if($analytic_report_visitors['message'] != 'ok')
           {
-              return App::response()->json($analytic_report, 400);
+              return App::response()->json($analytic_report_visitors, 400);
           }
-          $post->visitor_count = $analytic_report['visits'];
+
+          if($analytic_week_visitors['message'] != 'ok')
+          {
+              return App::response()->json($analytic_week_visitors, 400);
+          }
+
+
+          $post->visitor_count = $analytic_report_visitors['visits'];
+          $post->visitor_week_count = $analytic_week_visitors['visits'];
           $post->save();
 
         }

@@ -12,6 +12,7 @@ ALTER TABLE pk_blog_post ADD tag10 VARCHAR(100);
 
 ALTER TABLE pk_blog_post ADD category_id int(10) unsigned NOT NULL;
 ALTER TABLE pk_blog_post ADD visitor_count int(11) NOT NULL DEFAULT '0';
+ALTER TABLE pk_blog_post ADD visitor_week_count int(11) NOT NULL DEFAULT '0';
 
 CREATE TABLE pk_blog_category (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,

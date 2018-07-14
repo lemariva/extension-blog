@@ -32,7 +32,7 @@ class AnalyticsHelper
       * @param $startDate
       * @param $webpage
       */
-      public function apiAction($webpage=false, $startDate=false, $dimensions='', $filters='ga:pagepath', $metrics='ga:pageviews', $invalidCache = false, $sort = false, $maxResults = false)
+      public function apiAction($webpage=false, $startDate, $dimensions='', $filters='ga:pagepath', $metrics='ga:pageviews', $invalidCache = false, $sort = false, $maxResults = false)
       {
           // getting credentials
           $config = App::module('blog')->config();
@@ -53,7 +53,7 @@ class AnalyticsHelper
 
               $data = array('metrics' => $metrics,
                   'dimensions' => $dimensions,
-                  'start-date' => $config['gapi']['start_date'],
+                  'start-date' => $startDate,
                   'ids' => 'ga:' . $config['gapi']['credentials']['profile_id'],
                   'end-date' => 'today',
                   'webpage' => $webpage,

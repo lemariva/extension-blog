@@ -51,7 +51,7 @@ class AnalyticsApiController
             $client->authenticate($_GET['code']);
             App::config('blog')->set('gapi_auth_token', $client->getAccessToken());
 
-            $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/blog/post?page=';
+            $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/admin';
 
             return App::response()->redirect($redirect_uri);
           }

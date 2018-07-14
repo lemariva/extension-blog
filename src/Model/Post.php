@@ -64,6 +64,9 @@ class Post implements \JsonSerializable
     /** @Column(type="integer") */
     public $visitor_count = 0;
 
+    /** @Column(type="integer") */
+    public $visitor_week_count = 0;
+
     /**
      * @BelongsTo(targetEntity="Category", keyFrom="category_id")
      */
