@@ -98,7 +98,7 @@ class PostCategoryController
         $total = ceil($count / $limit);
         $page = max(1, min($total, $page));
 
-        $query->offset(($page - 1) * $limit)->limit($limit)->orderBy('modified', 'DESC');
+        $query->offset(($page - 1) * $limit)->limit($limit)->orderBy('date', 'DESC');
 
         foreach ($posts = $query->get() as $post) {
             $post->excerpt = App::content()->applyPlugins($post->excerpt, ['post' => $post, 'markdown' => $post->get('markdown')]);
@@ -108,7 +108,8 @@ class PostCategoryController
         return [
             '$view' => [
                 'title' => __($category->title),
-                'name' => 'blog/category.php'
+                'name' => 'blog/category.php',
+                'og:description' => $category->meta
             ],
             'category' => $category,
             'blog' => $this->blog,

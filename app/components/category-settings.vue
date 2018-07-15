@@ -15,6 +15,12 @@
                     {{ 'Slug cannot be blank.' | trans }}</p>
             </div>
             <div class="uk-form-row">
+                <label for="form-meta-description" class="uk-form-label">{{ 'Description' | trans }}</label>
+                <div class="uk-form-controls">
+                    <textarea name="meta" class="uk-form-width-large" rows="5" type="text" v-model="post.meta"></textarea>
+                </div>
+            </div>
+            <div class="uk-form-row">
                 <input class="uk-width-1-1 uk-form-large" type="text" name="color" :placeholder="'Category Color' | trans"
                        v-model="category.color" v-validate:required>
                 <p class="uk-form-help-block uk-text-danger" v-show="form.color.invalid">

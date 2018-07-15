@@ -24,4 +24,7 @@ class Category
     /** @Column(type="string") */
     public $icon;
 
+    /** @Column(type="text") */
+    public $meta = '';
+
 }

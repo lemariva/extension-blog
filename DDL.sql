@@ -18,6 +18,7 @@ CREATE TABLE pk_blog_category (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   title varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   slug varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  meta TEXT COLLATE utf8_unicode_ci NOT NULL,
   color varchar(7) COLLATE utf8_unicode_ci NOT NULL,
   icon varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (id),
