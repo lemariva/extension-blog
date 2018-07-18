@@ -18,6 +18,33 @@
 
     <div class="uk-margin"><?= $post->content ?></div>
 
+
+    <?php if (count($commendposts) > 0): ?>
+    <div class="relatedposts">
+
+      <h3>Related posts</h3>
+      <div class="uk-flex thumb">
+        <?php foreach ($commendposts as $commend) : ?>
+            <?php if($commend->id != $post->id) : ?>
+            <a href="<?= $view->url('@blog/id', ['id' => $commend->id]) ?>">
+            <div class="uk-panel uk-panel-box tbox uk-overlay">
+              <div class="timg">
+                <?php if ($image = $commend->get('image.src')): ?>
+                    <img src="<?= $image ?>" alt="<?= $commend->get('image.alt') ?>">
+                <?php endif // image?>
+              </div>
+              <h6 class="uk-h6 ttext">
+                  <?php echo $commend->title ?>
+              </h6>
+            </div>
+            </a>
+            <?php endif ?>
+        <?php endforeach ?>
+      </div>
+    </div>
+    <?php endif ?>
+
+
     <?= $view->render('blog/comments.php') ?>
 
 </article>

@@ -45,6 +45,7 @@ class SiteController
         // BelongsTo not working in Model/Post
         $categories = Category::query()->get();
 
+
         foreach ($posts = $query->get() as $post) {
             $post->excerpt = App::content()->applyPlugins($post->excerpt, ['post' => $post, 'markdown' => $post->get('markdown')]);
             $post->content = App::content()->applyPlugins($post->content, ['post' => $post, 'markdown' => $post->get('markdown'), 'readmore' => true]);
@@ -135,6 +136,8 @@ class SiteController
 
         $user = App::user();
 
+        $commendposts = Post::where(['status = ?', 'date < ?', 'category_id = ?'], [Post::STATUS_PUBLISHED, new \DateTime, $post->category_id])->related('user')->select(['id', 'title', 'data'])->limit(4)->orderBy('visitor_week_count', 'DESC')->get();
+
         $description = $post->get('meta.og:description');
         if (!$description) {
             $description = strip_tags($post->excerpt ?: $post->content);
@@ -167,6 +170,7 @@ class SiteController
                     ]
                 ]
             ],
+            'commendposts' => $commendposts,
             'blog' => $this->blog,
             'post' => $post
         ];

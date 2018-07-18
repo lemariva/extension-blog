@@ -168,7 +168,8 @@ return [
         'posts' => [
             'posts_per_page' => 20,
             'comments_enabled' => true,
-            'markdown_enabled' => true
+            'markdown_enabled' => true,
+            'commended_posts' => 5
         ],
 
         'gapi_auth_token' => '',
