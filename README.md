@@ -78,6 +78,7 @@ Edit post form:
 It requires:
 * `composer require google/apiclient:^2.0`
 * Google Account. More info [here](https://developers.google.com/analytics/devguides/reporting/core/v4/)
+* Pagekit >= 1.0.15
 
 You need to activate the option in the blog settings. Additionally you need to configure `Start Date`, `Client ID`, and 
 `Client Secret` parameters. Check for pop up blocking. A pop up is opened if the Google Token does not exist.
