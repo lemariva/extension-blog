@@ -1,3 +1,6 @@
+# :no_entry: [DEPRECATED] 
+I am very sorry. Unfortunately the Pagekit CMS project is almost dead. My blog is now using OctoberCMS. I am not going to maintain this extensions anymore. If you would like to maintain the extension, please leave me a message. 
+
 # Blog Extension
 
 This extension has implemented Categories and Tags in a very simple way. If you want to check how this extension work just go to: http://frontbackend.com
